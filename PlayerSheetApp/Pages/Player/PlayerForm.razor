@@ -1,0 +1,39 @@
+﻿@using PlayerSheetApp.Data
+
+<a class="btn btn-link" href="player">回清單</a>
+
+<EditForm Model="@Player" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-field">
+        <label>背號</label>
+        <div>
+            <InputNumber @bind-Value="@Player.Number" />
+            <ValidationMessage For="@(()=>Player.Number)" />
+        </div>
+    </div>
+    <div class="form-field">
+        <label>姓名</label>
+        <div>
+            <InputText @bind-Value="@Player.Name" />
+            <ValidationMessage For="@(()=>Player.Name)" />
+        </div>
+    </div>
+    <div class="form-field">
+        <label>出生日期 (yyyy/MM/dd)</label>
+        <div>
+            <InputDate @bind-Value="@Player.BirthDay" />
+            <ValidationMessage For="@(()=>Player.BirthDay)" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        儲存
+    </button>
+
+</EditForm>
+
+@code {
+    [Parameter] public PlayerItem Player { get; set; }
+    [Parameter] public string ButtonText { get; set; }
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+}

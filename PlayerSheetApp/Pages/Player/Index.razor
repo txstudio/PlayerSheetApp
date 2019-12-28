@@ -1,0 +1,58 @@
+﻿@page "/player"
+
+@using PlayerSheetApp.Data
+@inject PlayerService PlayerService
+
+<h3>球員清單</h3>
+
+<a class="btn btn-success" href="player/create">新增球員</a>
+
+@if (_players == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>--</th>
+                <th>背號</th>
+                <th>姓名</th>
+                <th>生日</th>
+                <th>--</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var _player in _players)
+            {
+                <tr>
+                    <td>@_player.Id</td>
+                    <td>@_player.Number</td>
+                    <td>@_player.Name</td>
+                    <td>@String.Format("{0:yyyy/MM/dd}", _player.BirthDay)</td>
+                    <td>
+                        <a class="btn btn-primary" href="player/edit/@_player.Id">編輯</a>
+                        <button class="btn btn-danger" @onclick="@(()=> DeletePlayer(_player.Id))">刪除</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    private IEnumerable<PlayerItem> _players;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        this._players = await PlayerService.GetPlayersAsync();
+    }
+
+    async Task DeletePlayer(int playerId)
+    {
+        throw new NotImplementedException("delete player=" + playerId);
+    }
+}

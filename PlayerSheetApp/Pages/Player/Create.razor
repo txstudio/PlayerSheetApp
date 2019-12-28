@@ -1,0 +1,23 @@
+﻿@page "/player/create"
+
+@using PlayerSheetApp.Data
+@using Newtonsoft.Json
+
+@inject PlayerService _playerService
+@inject NavigationManager _navigationManager
+
+<h3>新增球員</h3>
+
+<PlayerForm ButtonText="新增"
+            Player="@_player"
+            OnValidSubmit="@CreatePlayer" />
+
+@code {
+    PlayerItem _player = new PlayerItem();
+
+    async Task CreatePlayer()
+    {
+        await _playerService.CreateAsync(_player);
+        _navigationManager.NavigateTo("player");
+    }
+}

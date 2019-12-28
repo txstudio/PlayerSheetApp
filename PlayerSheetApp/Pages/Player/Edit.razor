@@ -1,0 +1,28 @@
+﻿@page "/player/edit/{id:int}"
+
+@using PlayerSheetApp.Data
+
+@inject PlayerService _playerService
+@inject NavigationManager _navigationManager
+
+<h3>編輯球員</h3>
+
+<PlayerForm ButtonText="儲存"
+            Player="@Player"
+            OnValidSubmit="@EditPlayer" />
+
+@code {
+    [Parameter] public int Id { get; set; }
+    PlayerItem Player = new PlayerItem();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        var _player = await _playerService.GetPlayerAsync(Id);
+        this.Player = _player;
+    }
+
+    async Task EditPlayer()
+    {
+
+    }
+}
