@@ -1,6 +1,8 @@
 ﻿@page "/player"
 
 @using PlayerSheetApp.Data
+
+@inject IJSRuntime _js
 @inject PlayerService _playerService
 
 <h3>球員清單</h3>
@@ -56,7 +58,10 @@ else
 
     async Task DeletePlayer(int playerId)
     {
-        await _playerService.DeleteAsync(playerId);
-        await LoadAsync();
+        if(await _js.InvokeAsync<bool>("confirm","刪除此筆資料?"))
+        {
+            await _playerService.DeleteAsync(playerId);
+            await LoadAsync();
+        }
     }
 }
