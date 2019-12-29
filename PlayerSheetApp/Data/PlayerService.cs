@@ -96,7 +96,13 @@ namespace PlayerSheetApp.Data
         public async Task<bool> UpdateAsync(PlayerItem player)
         {
             var _player = new Player();
-            _player.Id = player.Id;
+
+            //更新物件如果沒有從 Entity 抓資料的話會出現 Exception
+            //"cannot be tracked because another instance with the same key value ..."
+            _player = await this._context.Players
+                                            .Where(x => x.Id == player.Id)
+                                            .FirstOrDefaultAsync();
+
             _player.Number = player.Number ?? 0;
             _player.Name = player.Name;
             _player.BirthDay = player.BirthDay;

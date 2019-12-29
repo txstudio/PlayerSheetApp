@@ -13,6 +13,7 @@
 
 @code {
     [Parameter] public int Id { get; set; }
+
     PlayerItem Player = new PlayerItem();
 
     protected async override Task OnParametersSetAsync()
@@ -23,6 +24,7 @@
 
     async Task EditPlayer()
     {
-
+        await _playerService.UpdateAsync(this.Player);
+        _navigationManager.NavigateTo("player");
     }
 }
