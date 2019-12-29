@@ -116,8 +116,11 @@ namespace PlayerSheetApp.Data
 
         public async Task<bool> DeleteAsync(int Id)
         {
-            var _player = new Player();
-            _player.Id = Id;
+            //更新物件如果沒有從 Entity 抓資料的話會出現 Exception
+            //"cannot be tracked because another instance with the same key value ..."
+            var _player = await this._context.Players
+                                                .Where(x => x.Id == Id)
+                                                .FirstOrDefaultAsync();
 
             this._context.Remove(_player);
 

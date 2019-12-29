@@ -1,7 +1,7 @@
 ﻿@page "/player"
 
 @using PlayerSheetApp.Data
-@inject PlayerService PlayerService
+@inject PlayerService _playerService
 
 <h3>球員清單</h3>
 
@@ -47,12 +47,17 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        await LoadAsync();
+    }
 
-        this._players = await PlayerService.GetPlayersAsync();
+    async Task LoadAsync()
+    {
+        this._players = await _playerService.GetPlayersAsync();
     }
 
     async Task DeletePlayer(int playerId)
     {
-        throw new NotImplementedException("delete player=" + playerId);
+        await _playerService.DeleteAsync(playerId);
+        await LoadAsync();
     }
 }
