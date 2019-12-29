@@ -34,7 +34,6 @@ namespace PlayerSheetApp
                 options.UseInMemoryDatabase(databaseName: "playersheet_database")
             );
 
-            services.AddSingleton<WeatherForecastService>();
             services.AddScoped<PlayerService>();
         }
 
