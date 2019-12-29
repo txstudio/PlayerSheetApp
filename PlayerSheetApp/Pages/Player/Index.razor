@@ -32,15 +32,14 @@ else
                     <td>@_player.Name</td>
                     <td>@String.Format("{0:yyyy/MM/dd}", _player.BirthDay)</td>
                     <td>
-                        <a class="btn btn-primary" href="player/edit/@_player.Id">編輯</a>
-                        <button class="btn btn-danger" @onclick="@(()=> DeletePlayer(_player.Id))">刪除</button>
+                        <a class="btn btn-sm btn-primary" href="player/edit/@_player.Id">編輯</a>
+                        <button class="btn btn-sm btn-danger" @onclick="@(()=> DeletePlayer(_player.Id))">刪除</button>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 }
-
 
 @code {
     private IEnumerable<PlayerItem> _players;
