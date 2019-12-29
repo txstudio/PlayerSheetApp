@@ -41,18 +41,17 @@ namespace PlayerSheetApp.Data
         public PlayerService(PlayerSheetContext context)
         {
             this._context = context;
+
+            if (this._context.Players.Count() == 0)
+            {
+                this._context.Players.Add(new Player() { Id = 1, Name = "Messi", Number = 10, BirthDay = new DateTime(1987, 6, 24) });
+                this._context.Players.Add(new Player() { Id = 2, Name = "Cristiano Ronaldo", Number = 7, BirthDay = new DateTime(1985, 2, 5) });
+                this._context.SaveChangesAsync();
+            }
         }
 
         public async Task<IEnumerable<PlayerItem>> GetPlayersAsync()
         {
-            if(this._context.Players.Count() == 0)
-            {
-                this._context.Players.Add(new Player() { Id = 1, Name = "Messi", Number = 10, BirthDay = new DateTime(1987, 6, 24) });
-                this._context.Players.Add(new Player() { Id = 2, Name = "Cristiano Ronaldo", Number = 7, BirthDay = new DateTime(1985, 2, 5) });
-                await this._context.SaveChangesAsync();
-            }
-
-
             var _players = await this._context.Players
                                                 .Select(x => new PlayerItem { 
                                                     Id = x.Id,
